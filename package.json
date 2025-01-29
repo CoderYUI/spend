@@ -1,12 +1,13 @@
 {
   "name": "spendwise",
   "version": "1.0.0",
+  "type": "module",
   "description": "Expense tracking application",
   "main": "script.js",
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "build": "vite build",
+    "build": "vite build --emptyOutDir",
     "preview": "vite preview"
   },
   "author": "",
