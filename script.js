@@ -126,8 +126,11 @@ document.querySelectorAll('a').forEach(anchor => {
 
 // Update the path handling function
 const fixPath = (path) => {
+    if (path.includes('dashboard')) {
+        return path.replace('/dashboard', './dashboard/');
+    }
     if (path.startsWith('/')) {
-        return path.replace('/', './');
+        return '.' + path;
     }
     return path;
 };
@@ -189,9 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('a').forEach(anchor => {
         if (anchor.href && !anchor.href.startsWith('#') && !anchor.href.startsWith('http')) {
             const originalHref = anchor.getAttribute('href');
-            if (originalHref.includes('dashboard.html')) {
-                anchor.href = './dashboard.html';
-            }
+            anchor.href = fixPath(originalHref);
         }
     });
     
