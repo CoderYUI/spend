@@ -1,5 +1,7 @@
 node_modules
+dist
 .env
-
+.DS_Store
+package-lock.json
 index_old.html
 script_old.js
