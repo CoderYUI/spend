@@ -6,7 +6,11 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run clean && npm run build:all",
+    "build:all": "npm run build:client && npm run build:server",
+    "build:client": "vite build",
+    "build:server": "vite build --ssr",
+    "clean": "rm -rf dist",
     "preview": "vite preview"
   },
   "author": "",
