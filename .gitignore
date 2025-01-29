@@ -2,6 +2,7 @@ node_modules
 dist
 .env
 .DS_Store
+.vercel
 package-lock.json
 index_old.html
 script_old.js
