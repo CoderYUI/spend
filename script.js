@@ -124,10 +124,10 @@ document.querySelectorAll('a').forEach(anchor => {
     }
 });
 
-// Add path handling utilities
+// Update the path handling function
 const fixPath = (path) => {
     if (path.startsWith('/')) {
-        return `.${path}`;
+        return path.replace('/', './');
     }
     return path;
 };
@@ -181,6 +181,39 @@ document.addEventListener('DOMContentLoaded', () => {
             link.href = getAssetPath(link.getAttribute('href'));
         }
     });
+});
+
+// Update the anchor handling in DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Fix all internal links
+    document.querySelectorAll('a').forEach(anchor => {
+        if (anchor.href && !anchor.href.startsWith('#') && !anchor.href.startsWith('http')) {
+            const originalHref = anchor.getAttribute('href');
+            if (originalHref.includes('dashboard.html')) {
+                anchor.href = './dashboard.html';
+            }
+        }
+    });
+    
+    // Fix resource loading
+    document.querySelectorAll('img, script, link').forEach(element => {
+        if (element.src && element.src.startsWith('/')) {
+            element.src = '.' + element.src;
+        }
+        if (element.href && element.href.startsWith('/')) {
+            element.href = '.' + element.href;
+        }
+    });
+
+    // Enhanced error handling
+    document.addEventListener('error', function(e) {
+        if (e.target.tagName === 'IMG' || e.target.tagName === 'SCRIPT') {
+            console.error('Resource failed to load:', e.target.src);
+            if (e.target.dataset.fallback) {
+                e.target.src = e.target.dataset.fallback;
+            }
+        }
+    }, true);
 });
 
 // Update the existing error handling
