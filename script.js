@@ -124,6 +124,53 @@ document.querySelectorAll('a').forEach(anchor => {
     }
 });
 
+// Add path handling utilities
+const fixPath = (path) => {
+    if (path.startsWith('/')) {
+        return `.${path}`;
+    }
+    return path;
+};
+
+// Replace the DOMContentLoaded event handler with improved asset handling
+document.addEventListener('DOMContentLoaded', () => {
+    // Fix all image sources
+    document.querySelectorAll('img').forEach(img => {
+        if (img.src) {
+            const originalSrc = img.getAttribute('src');
+            img.src = fixPath(originalSrc);
+        }
+    });
+
+    // Fix all link hrefs
+    document.querySelectorAll('a').forEach(anchor => {
+        if (anchor.href && !anchor.href.startsWith('#') && !anchor.href.startsWith('http')) {
+            const originalHref = anchor.getAttribute('href');
+            anchor.href = fixPath(originalHref);
+        }
+    });
+
+    // Fix all stylesheet links
+    document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+        if (link.href) {
+            const originalHref = link.getAttribute('href');
+            link.href = fixPath(originalHref);
+        }
+    });
+});
+
+// Update the existing error handling
+window.addEventListener('error', function(e) {
+    if (e.target.tagName === 'IMG') {
+        console.error('Image failed to load:', e.target.src);
+        // Try loading with adjusted path
+        const newSrc = fixPath(e.target.getAttribute('src'));
+        if (newSrc !== e.target.src) {
+            e.target.src = newSrc;
+        }
+    }
+}, true);
+
 // Update path handling for assets and links
 document.addEventListener('DOMContentLoaded', () => {
     // Fix resource loading
