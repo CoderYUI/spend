@@ -104,4 +104,19 @@ if (contactForm) {
         alert('Thank you for your message! We will get back to you soon.');
         contactForm.reset();
     });
-}
+};
+
+// Enhanced error handling for resources
+document.addEventListener('error', function(e) {
+    if (e.target.tagName === 'IMG' || e.target.tagName === 'SCRIPT') {
+        console.error('Resource failed to load:', e.target.src);
+        // Optionally retry loading or show fallback
+    }
+}, true);
+
+// Update anchor links to use absolute paths
+document.querySelectorAll('a').forEach(anchor => {
+    if (anchor.href.startsWith('/')) {
+        anchor.href = window.location.origin + anchor.href;
+    }
+});
