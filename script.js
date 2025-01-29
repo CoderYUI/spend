@@ -132,6 +132,13 @@ const fixPath = (path) => {
     return path;
 };
 
+// Add correct path handling for Vite
+const getAssetPath = (path) => {
+    // Remove leading slash if present
+    path = path.replace(/^\//, '');
+    return new URL(path, import.meta.url).href;
+};
+
 // Replace the DOMContentLoaded event handler with improved asset handling
 document.addEventListener('DOMContentLoaded', () => {
     // Fix all image sources
@@ -155,6 +162,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (link.href) {
             const originalHref = link.getAttribute('href');
             link.href = fixPath(originalHref);
+        }
+    });
+});
+
+// Update the DOMContentLoaded event handler
+document.addEventListener('DOMContentLoaded', () => {
+    // Fix all image sources
+    document.querySelectorAll('img').forEach(img => {
+        if (img.src && !img.src.startsWith('http')) {
+            img.src = getAssetPath(img.getAttribute('src'));
+        }
+    });
+
+    // Fix all resource paths
+    document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+        if (link.href && !link.href.startsWith('http')) {
+            link.href = getAssetPath(link.getAttribute('href'));
         }
     });
 });
