@@ -3,24 +3,20 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
-  "builds": [
-    {
-      "src": "dist/**",
-      "use": "@vercel/static"
+  "public": true,
+  "rewrites": [
+    { 
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
-  "routes": [
+  "builds": [
     {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1"
-    },
-    {
-      "src": "/(.+)",
-      "dest": "/"
-    },
-    {
-      "src": "/",
-      "dest": "index.html"
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "zeroConfig": true
+      }
     }
   ]
 }
