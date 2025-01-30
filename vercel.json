@@ -1,5 +1,11 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build"
+    }
+  ],
   "routes": [
     {
       "src": "/dashboard",
@@ -10,10 +16,28 @@
       "dest": "/dashboard/$1"
     },
     {
+      "src": "/images/(.*)",
+      "dest": "/Images/$1",
+      "caseSensitive": false
+    },
+    {
       "src": "/(.*)",
       "dest": "/$1"
     }
   ],
+  "output": "public",
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "public": true,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ]
 }
