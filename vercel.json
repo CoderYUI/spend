@@ -1,9 +1,0 @@
-{
-  "version": 2,
-  "framework": "vite",
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/dashboard", "dest": "/dashboard/index.html" },
-    { "src": "/(.*)", "dest": "/$1" }
-  ]
-}
