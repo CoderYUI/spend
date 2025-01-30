@@ -1,10 +1,6 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  root: './public',
-  server: {
-    open: true, // Automatically open the browser
-  },
   build: {
     rollupOptions: {
       input: {
