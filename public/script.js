@@ -35,30 +35,52 @@ faqButtons.forEach(button => {
 
 // Theme toggler
 const themeToggle = document.getElementById('theme-toggle');
+const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
 const lightIcon = document.getElementById('theme-toggle-light-icon');
 const darkIcon = document.getElementById('theme-toggle-dark-icon');
+const mobileLightIcon = document.getElementById('mobile-theme-toggle-light-icon');
+const mobileDarkIcon = document.getElementById('mobile-theme-toggle-dark-icon');
 
 // Check for saved theme preference
 const savedTheme = localStorage.getItem('theme') || 'light';
 document.documentElement.setAttribute('data-theme', savedTheme);
 updateThemeIcons(savedTheme);
 
-themeToggle.addEventListener('click', () => {
+// Desktop theme toggle
+themeToggle?.addEventListener('click', toggleTheme);
+// Mobile theme toggle
+mobileThemeToggle?.addEventListener('click', toggleTheme);
+
+function toggleTheme() {
     const currentTheme = document.documentElement.getAttribute('data-theme');
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
     updateThemeIcons(newTheme);
-});
+}
 
 function updateThemeIcons(theme) {
-    if (theme === 'dark') {
-        lightIcon.classList.add('hidden');
-        darkIcon.classList.remove('hidden');
-    } else {
-        lightIcon.classList.remove('hidden');
-        darkIcon.classList.add('hidden');
+    // Update desktop icons
+    if (lightIcon && darkIcon) {
+        if (theme === 'dark') {
+            lightIcon.classList.add('hidden');
+            darkIcon.classList.remove('hidden');
+        } else {
+            lightIcon.classList.remove('hidden');
+            darkIcon.classList.add('hidden');
+        }
+    }
+
+    // Update mobile icons
+    if (mobileLightIcon && mobileDarkIcon) {
+        if (theme === 'dark') {
+            mobileLightIcon.classList.add('hidden');
+            mobileDarkIcon.classList.remove('hidden');
+        } else {
+            mobileLightIcon.classList.remove('hidden');
+            mobileDarkIcon.classList.add('hidden');
+        }
     }
 }
 
