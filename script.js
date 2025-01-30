@@ -124,19 +124,12 @@ document.querySelectorAll('a').forEach(anchor => {
     }
 });
 
-// Update the path handling function
+// Add path handling utilities
 const fixPath = (path) => {
     if (path.startsWith('/')) {
-        return path.replace('/', './');
+        return `.${path}`;
     }
     return path;
-};
-
-// Add correct path handling for Vite
-const getAssetPath = (path) => {
-    // Remove leading slash if present
-    path = path.replace(/^\//, '');
-    return new URL(path, import.meta.url).href;
 };
 
 // Replace the DOMContentLoaded event handler with improved asset handling
@@ -164,56 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
             link.href = fixPath(originalHref);
         }
     });
-});
-
-// Update the DOMContentLoaded event handler
-document.addEventListener('DOMContentLoaded', () => {
-    // Fix all image sources
-    document.querySelectorAll('img').forEach(img => {
-        if (img.src && !img.src.startsWith('http')) {
-            img.src = getAssetPath(img.getAttribute('src'));
-        }
-    });
-
-    // Fix all resource paths
-    document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
-        if (link.href && !link.href.startsWith('http')) {
-            link.href = getAssetPath(link.getAttribute('href'));
-        }
-    });
-});
-
-// Update the anchor handling in DOMContentLoaded
-document.addEventListener('DOMContentLoaded', () => {
-    // Fix all internal links
-    document.querySelectorAll('a').forEach(anchor => {
-        if (anchor.href && !anchor.href.startsWith('#') && !anchor.href.startsWith('http')) {
-            const originalHref = anchor.getAttribute('href');
-            if (originalHref.includes('dashboard.html')) {
-                anchor.href = './dashboard.html';
-            }
-        }
-    });
-    
-    // Fix resource loading
-    document.querySelectorAll('img, script, link').forEach(element => {
-        if (element.src && element.src.startsWith('/')) {
-            element.src = '.' + element.src;
-        }
-        if (element.href && element.href.startsWith('/')) {
-            element.href = '.' + element.href;
-        }
-    });
-
-    // Enhanced error handling
-    document.addEventListener('error', function(e) {
-        if (e.target.tagName === 'IMG' || e.target.tagName === 'SCRIPT') {
-            console.error('Resource failed to load:', e.target.src);
-            if (e.target.dataset.fallback) {
-                e.target.src = e.target.dataset.fallback;
-            }
-        }
-    }, true);
 });
 
 // Update the existing error handling

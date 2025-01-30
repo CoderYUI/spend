@@ -2319,36 +2319,3 @@ function initializeBudgetTab() {
 window.initializeBudgetTab = initializeBudgetTab;
 
 // ...rest of existing code...
-
-// Add base path configuration
-const BASE_PATH = '..';
-
-// Path handling utility
-const getAssetPath = (path) => {
-    if (path.startsWith('/')) {
-        path = path.substring(1);
-    }
-    return path.startsWith('Images/') ? `${BASE_PATH}/${path}` : path;
-};
-
-// Fix image paths when page loads
-document.addEventListener('DOMContentLoaded', () => {
-    // Fix all image sources
-    document.querySelectorAll('img').forEach(img => {
-        const originalSrc = img.getAttribute('src');
-        img.src = getAssetPath(originalSrc);
-    });
-});
-
-// Image path handling
-document.addEventListener('DOMContentLoaded', () => {
-    // Fix all image sources
-    document.querySelectorAll('img').forEach(img => {
-        if (img.src && !img.src.startsWith('http')) {
-            const originalSrc = img.getAttribute('src');
-            img.src = getAssetPath(originalSrc);
-        }
-    });
-});
-
-// ...rest of your dashboard code...
