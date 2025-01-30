@@ -5,6 +5,10 @@
       "destination": "/dashboard.html"
     },
     {
+      "source": "/dashboard.js",
+      "destination": "/dashboard.js"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
