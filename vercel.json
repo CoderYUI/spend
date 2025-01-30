@@ -25,10 +25,8 @@
       "dest": "/$1"
     }
   ],
-  "output": "public",
   "cleanUrls": true,
   "trailingSlash": false,
-  "public": true,
   "headers": [
     {
       "source": "/(.*)",
