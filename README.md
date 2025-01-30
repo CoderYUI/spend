@@ -71,6 +71,7 @@ Spendwise/
 ├── README.md
 ├── Firebase_Setup.md
 ├── vercel.json
+├── index.html (root) // Contains the meta refresh tag to redirect to /index.html **(don't edit on this)**
 
 ```
 
