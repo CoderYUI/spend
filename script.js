@@ -114,6 +114,12 @@ document.addEventListener('error', function(e) {
     if (e.target.tagName === 'IMG' || e.target.tagName === 'SCRIPT') {
         console.error('Resource failed to load:', e.target.src);
         // Optionally retry loading or show fallback
+        if (e.target.tagName === 'IMG') {
+            const newSrc = fixPath(e.target.getAttribute('src'));
+            if (newSrc !== e.target.src) {
+                e.target.src = newSrc;
+            }
+        }
     }
 }, true);
 
