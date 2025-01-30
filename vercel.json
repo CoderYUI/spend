@@ -1,29 +1,18 @@
 {
   "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
   "builds": [
     {
       "src": "package.json",
       "use": "@vercel/static-build"
     }
   ],
-  "routes": [
-    {
-      "src": "/dashboard",
-      "dest": "/dashboard/index.html"
-    },
-    {
-      "src": "/dashboard/(.*)",
-      "dest": "/dashboard/$1"
-    },
-    {
-      "src": "/images/(.*)",
-      "dest": "/Images/$1",
-      "caseSensitive": false
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
+  "rewrites": [
+    { "source": "/dashboard", "destination": "/dashboard/index.html" },
+    { "source": "/dashboard/(.*)", "destination": "/dashboard/$1" },
+    { "source": "/(.*)", "destination": "/$1" }
   ],
   "cleanUrls": true,
   "trailingSlash": false,
