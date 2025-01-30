@@ -2319,3 +2319,19 @@ function initializeBudgetTab() {
 window.initializeBudgetTab = initializeBudgetTab;
 
 // ...rest of existing code...
+
+// Path handling utility
+const getAssetPath = (path) => {
+    return path.startsWith('/') ? '.' + path : path;
+};
+
+// Fix image paths when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    // Fix all image sources
+    document.querySelectorAll('img').forEach(img => {
+        const originalSrc = img.getAttribute('src');
+        img.src = getAssetPath(originalSrc);
+    });
+});
+
+// ... rest of your dashboard JavaScript code ...
